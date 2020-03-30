@@ -1,0 +1,530 @@
+//SISTEMAINFORMACION
+
+package herencia;
+import javax.swing.JOptionPane;
+/**
+* Clase Java para implementar un cliente
+* que emplea la jerarquía de herencia de la persona,
+* el empleado y el estudiante para mostrar los cálculos
+* de cada uno de los respectivos procesos implementados
+* por cada clase
+*/
+public class SistemaInformacion
+{
+/************/
+/************/
+/************/
+//Constructor de la clase
+public SistemaInformacion() {
+// TODO Auto-generated constructor stub
+}
+/**
+* @param args
+*/
+public static void main(String[] args)
+{
+/************/
+/************/
+/************/
+// TODO Auto-generated method stub
+    int opcion = 0;
+    Persona sistemaInformacion = new Persona();
+    try
+    {
+//Usamos la herencia de la superclase para acceder a los
+//métodos de lectura de datos
+    do{
+
+        opcion = sistemaInformacion.leerDatoTipoEntero("Ingrese la opción 1 para procesar los datos del empleado o 2 para procesar estudiante,  3 para salir: ");
+        if (opcion == 1)
+        {
+            JOptionPane.showMessageDialog(null,"Procesando datos del empleado");
+            Empleado manejadorEmpleado = new Empleado();
+            //Leemos los datos
+            manejadorEmpleado =manejadorEmpleado.ingresarDatosEmpleado();
+            //Mostramos el reporte de datos
+            manejadorEmpleado.imprimirReporteEstadoEmpleado();
+        }
+        else
+       if (opcion == 2)
+        {
+            JOptionPane.showMessageDialog(null,"Procesando datos del estudiante");
+            Estudiante constructEstudiante = new Estudiante();
+            //Leemos los datos
+            constructEstudiante = constructEstudiante.leerNotas();
+            //Mostramos el reporte de datos
+            constructEstudiante.imprimirPromedioNotas();
+        }
+        else 
+        if (opcion == 3)
+        {
+            JOptionPane.showMessageDialog(null,"Saliendo del Sistema");
+            break;
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null,"Opción inválida");
+        }
+        } while (opcion == 1 || opcion == 3 || opcion == 2);//fin del do-while
+        }//Fin del try
+        catch (Exception errorMain) {
+            JOptionPane.showMessageDialog(null,"Error en la digitación: ");
+            errorMain.printStackTrace();
+        }
+/************/
+    }
+/************/
+/************/
+}
+
+
+CLASE PERSONA
+
+package herencia;
+
+/**
+ *
+ * @author 57311
+ */
+import javax.swing.JOptionPane;
+/**
+* Clase Java para implementar una superclase padre
+* que maneja los datos de un objeto de tipo persona
+* de forma genérica
+*/
+public class Persona{
+/************/
+/************/
+//Atributos de la clase
+protected String nombre;
+protected String apellido;
+protected int edad;
+protected double peso;
+/************/
+/************/
+/************/
+//Constructor de la clase
+public Persona() {
+// TODO Auto-generated constructor stub
+}
+/************/
+/************/
+/************/
+//Constructor sobrecargado
+public Persona (String nombre, String apellido, int edad, double peso) {
+this.nombre = nombre;
+this.apellido = apellido;
+this.edad = edad;
+this.peso = peso;
+}
+/************/
+/************/
+/************/
+//Métodos de Encapsulamiento
+public String getNombre() {
+return nombre;
+}
+public void setNombre(String nombre) {
+this.nombre = nombre;
+}
+public String getApellido() {
+return apellido;
+}
+public void setApellido(String apellido) {
+this.apellido = apellido;
+}
+public int getEdad() {
+return edad;
+}
+public void setEdad(int edad) {
+this.edad = edad;
+}
+public double getPeso() {
+return peso;
+}
+public void setPeso(double peso) {
+this.peso = peso;
+}
+/************/
+/************/
+/************/
+//Métodos genéricos para un objeto de tipo persona
+//Método para mostrar los datos de identificación de la persona
+public void imprimirDatosPersona ()
+{
+String datosPersona = "";
+datosPersona = "Nombre " + nombre + "\n"
++ "Apellido: " + apellido + "\n" +
+"Edad: " + edad + "\n" +
+"Peso: " + peso;
+JOptionPane.showMessageDialog(null,datosPersona);
+definirEstadoPersona(edad);
+}
+//Método para definir el estado de la persona
+public void definirEstadoPersona (int edad)
+{
+String estado = "";
+if (edad < 18)
+{
+estado = "Menor de edad";
+}
+else
+{
+estado = "Mayor de edad";
+}
+JOptionPane.showMessageDialog(null,"La persona" + nombre
++ " " + apellido + " es " + estado);
+}
+//Método para leer un entero (int)
+public int leerDatoTipoEntero (String mensaje)
+{
+int valor = 0;
+try
+{
+valor =
+Integer.parseInt(JOptionPane.showInputDialog
+(null,mensaje));
+return (valor);
+}
+catch (Exception errorIngreso)
+{
+errorIngreso.printStackTrace();
+return (0);
+}
+}
+//Método para leer un double
+public double leerDatoTipoReal (String mensaje)
+{
+double valor = 0.0;
+valor =
+Double.parseDouble
+(JOptionPane.showInputDialog(null,mensaje));
+return (valor);
+}
+//Método para leer un booleano
+public boolean leerDatoTipoBooleano (String mensaje)
+{
+boolean valor = false;
+valor =
+Boolean.parseBoolean
+(JOptionPane.showInputDialog(null,mensaje));
+return (valor);
+}
+public String leerDatoTipoCadena (String mensaje)
+{
+String valor = "";
+valor = JOptionPane.showInputDialog(null,mensaje);
+return (valor);
+}
+/************/
+}
+
+
+SUBCLASE EMPLEADO
+
+package herencia;
+import javax.swing.JOptionPane;
+/**
+* Clase Java para implementar una subclase
+* de tipo empleado que muestra el comportamiento
+* propio de un objeto de este tipo
+*/
+public class Empleado extends Persona {
+/************/
+/************/
+/************/
+//Atributos de la subclase
+private double salario;
+private String codigoLaboral;
+private boolean esEmpleadoFijo;
+//Constructor de la clase
+public Empleado()
+{
+// TODO Auto-generated constructor stub
+}
+//Constructor de la subclase
+public Empleado (String nombre, String apellido, int edad, int peso,double salario, String codigoLaboral, boolean esEmpleadoFijo)
+{
+
+//Usamos el operador super para establecer el constructor
+//de la superclase
+super(nombre, apellido, edad, peso);
+
+//Definimos los atributos propios de este objeto que hereda
+this.salario = salario;
+this.codigoLaboral = codigoLaboral;
+this.esEmpleadoFijo = esEmpleadoFijo;
+}
+/************/
+/************/
+/************/
+//Métodos de encapsulamiento
+public double getSalario() {
+return salario;
+}
+public void setSalario(double salario) {
+this.salario = salario;
+}
+public String getCodigoLaboral() {
+return codigoLaboral;
+}
+public void setCodigoLaboral(String codigoLaboral) {
+this.codigoLaboral = codigoLaboral;
+}
+public boolean isEsEmpleadoFijo() {
+return esEmpleadoFijo;
+}
+public void setEsEmpleadoFijo(boolean esEmpleadoFijo) {
+this.esEmpleadoFijo = esEmpleadoFijo;
+}
+//Métodos propios del empleado
+/************/
+/************/
+//Método para calcular el salario del empleado
+public double calcularSalario (boolean esEmpleadoFijo, double valorHora, int numeroHorasTrabajadas)
+{
+double salario = 0.0;
+double bono = 0.0;
+if (esEmpleadoFijo == true)
+{
+bono = 5200.00;
+}
+else
+{
+bono = 1200.00;
+}
+salario = numeroHorasTrabajadas * valorHora + bono;
+return (salario);
+}
+//Método para imprimir el sueldo del empleado
+public void imprimirAsignacionSalario (String nombre, double sueldo)
+{
+JOptionPane.showMessageDialog(null,"El empleado " + nombre +" recibe un salario de " + sueldo);
+}
+//Método para ingresar los datos del empleado
+public Empleado ingresarDatosEmpleado ()
+{
+Empleado nuevoEmpleado = new Empleado();
+String nombre = "";
+String apellido = "";
+int edad = 0;
+double peso = 0.0;
+int numeroHoras = 0;
+double valorHora = 0.0;
+double salario = 0.0;
+boolean esEmpleadoFijo = false;
+String codigo = "";
+codigo = leerDatoTipoCadena("Ingrese el código del empleado: ");
+nombre = leerDatoTipoCadena("Ingrese el nombre del empleado: ");
+apellido = leerDatoTipoCadena("Ingrese el apellido del empleado: ");
+edad = leerDatoTipoEntero("Ingrese la edad del empleado: ");
+peso = leerDatoTipoReal("Ingrese el peso del empleado: ");
+
+//Obtenemos los datos que no hacen parte de la clase
+numeroHoras = leerDatoTipoEntero("Ingrese el número de horas trabajadas por el empleado: ");
+valorHora = leerDatoTipoReal("Ingrese el valor de la hora: ");
+esEmpleadoFijo = leerDatoTipoBooleano("¿El empleado es fijo (true/false)?: ");
+
+//Calculamos el salario
+salario = calcularSalario(esEmpleadoFijo, valorHora,numeroHoras);
+//Definimos los datos para el constructor
+nuevoEmpleado.setNombre(nombre);
+nuevoEmpleado.setApellido(apellido);
+nuevoEmpleado.setCodigoLaboral(codigo);
+nuevoEmpleado.setEdad(edad);
+nuevoEmpleado.setPeso(peso);
+nuevoEmpleado.setSalario(salario);
+nuevoEmpleado.setEsEmpleadoFijo(esEmpleadoFijo);
+
+//Retornamos el objeto
+return (nuevoEmpleado);
+}
+
+//Método para imprimir el reporte de status del empleado
+public void imprimirReporteEstadoEmpleado()
+{
+//Usamos nuevamente la herencia para llamar los métodos
+//que imprimen los datos del empleado
+imprimirDatosPersona();
+//Ahora imprimimos los datos propios del estudiante
+JOptionPane.showMessageDialog(null,"El código laboral del empleado es: " + codigoLaboral);
+//Asignación del salario
+imprimirAsignacionSalario(nombre,salario);
+if (esEmpleadoFijo == true)
+{
+JOptionPane.showMessageDialog(null,"El empleado es un trabajador fijo de la empresa");
+}
+else
+{
+JOptionPane.showMessageDialog(null,"El empleado es un trabajador contratado de la empresa");
+}
+}
+/************/
+/************/
+/************/
+//Método sobreescrito para definir el estado del empleado
+@Override
+public void definirEstadoPersona (int edad)
+{
+String estado = "";
+if (edad < 21)
+{
+estado = "Menor de edad legal";
+}
+else
+{
+estado = "Mayor de edad legal";
+}
+JOptionPane.showMessageDialog(null,"La persona " + nombre + "" + apellido + " es " + estado);
+}
+/************/
+/************/
+/************/
+}   
+
+SUBCLASE ESTUDIANTE
+
+package herencia;
+import javax.swing.JOptionPane;
+/**
+* Clase Java para implementar una subclase
+* de tipo empleado que muestra el comportamiento
+* propio de un objeto de este tipo
+*/
+public class Estudiante extends Persona {
+/************/
+/************/
+/************/
+//Atributos de la subclase
+    
+private String carnet;
+private int numMaterias;
+private double promedioNotas;
+private int nota;
+
+//Constructor de la clase
+public Estudiante()
+{
+// TODO Auto-generated constructor stub
+}
+
+public Estudiante(String nombre, String apellido, int edad, int peso, String carnet, int numMaterias, double promedioNotas, int nota)
+{
+    
+    super(nombre, apellido, edad, peso);
+    
+
+   this.carnet = carnet;
+   this.numMaterias = numMaterias;
+   this.promedioNotas = promedioNotas; 
+}
+//Métodos de encapsulamiento
+
+public String getCarnet(){
+return carnet;  
+}
+public String setCarnet(String carnet){
+this.carnet = carnet; 
+}
+
+public int getNumMaterias(){
+return numMaterias;  
+}
+public int setNumMaterias(int numMaterias){
+this.numMaterias = numMaterias; 
+}
+
+public double getPromedioNotas(){
+return promedioNotas;  
+}
+public double setPromedioNotas (double promedioNotas){
+this.promedioNotas = promedioNotas; 
+}
+public int getNota(){
+return nota;  
+}
+public int setNota (int nota){
+this.nota = nota; 
+}
+
+//Métodos propios del estudiante
+/************/
+/************/
+//Método para calcular el promdio de notas del estudiante
+
+public double calcularPromedio ( int numMaterias, double promedioNotas, int nota)
+{
+    promedioNotas = 0.0;
+    
+    promedioNotas=(promedioNotas+nota)/numMaterias;
+    
+return (promedioNotas);
+}
+
+public int leerNotas (int nota, double promedioNotas){
+
+nota = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la nota"));
+
+return (nota);
+}
+//Método para imprimir el promedio de notas del estudiante
+public void imprimirPromedioNotas (String carnet, double promedioNotas)
+{
+
+   JOptionPane.showMessageDialog(null, "El promedio de sus notas es: " + promedioNotas); 
+    
+}
+public Estudiante ingresarDatosEstudiante ()
+{
+Estudiante nuevoEstudiante = new Estudiante();
+String nombre = "";
+String apellido = "";
+int edad = 0;
+double peso = 0.0;
+int numeroHoras = 0;
+double valorHora = 0.0;
+double salario = 0.0;
+boolean esEmpleadoFijo = false;
+String codigo = "";
+carnet = leerDatoTipoCadena("Ingrese el carnet del estudiante: ");
+nombre = leerDatoTipoCadena("Ingrese el nombre del estudiante: ");
+apellido = leerDatoTipoCadena("Ingrese el apellido del estudiante: ");
+edad = leerDatoTipoEntero("Ingrese la edad del estudiante: ");
+peso = leerDatoTipoReal("Ingrese el peso del estudiante: ");
+
+//Obtenemos los datos que no hacen parte de la clase
+nota = leerDatoTipoEntero("Ingrese el número de horas trabajadas por el empleado: ");
+valorHora = leerDatoTipoReal("Ingrese el valor de la hora: ");
+esEmpleadoFijo = leerDatoTipoBooleano("¿El empleado es fijo (true/false)?: ");
+
+//Calculamos el promedio de Notas
+promedioNotas = calcularPromedioNotas(numMaterias,promedioNotas,nota);
+//Definimos los datos para el constructor
+nuevoEstudiante.setNombre(nombre);
+nuevoEstudiante.setApellido(apellido);
+nuevoEstudiante.setCodigoLaboral(codigo);
+nuevoEstudiante.setEdad(edad);
+nuevoEstudiante.setPeso(peso);
+nuevoEstudiante.setSalario(salario);
+nuevoEstudiante.setEsEmpleadoFijo(esEmpleadoFijo);
+
+//Retornamos el objeto
+return (nuevoEstudiante);
+}
+public void imprimirReporteEstadoEstudiante()
+{
+//Usamos nuevamente la herencia para llamar los métodos
+//que imprimen los datos del empleado
+imprimirDatosPersona();
+//Ahora imprimimos los datos propios del estudiante
+JOptionPane.showMessageDialog(null,"El código laboral del empleado es: " + codigoLaboral);
+//Asignación del salario
+imprimirAsignacionSalario(nombre,salario);
+if (esEmpleadoFijo == true)
+{
+JOptionPane.showMessageDialog(null,"El empleado es un trabajador fijo de la empresa");
+}
+else
+{
+JOptionPane.showMessageDialog(null,"El empleado es un trabajador contratado de la empresa");
+}
